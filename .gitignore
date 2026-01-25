@@ -1,0 +1,33 @@
+# OS - macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# OS - Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# OS - Linux
+*~
+
+# IDE - VS Code
+.vscode/
+
+# IDE - JetBrains (IntelliJ, WebStorm, PyCharm, etc.)
+.idea/
+*.iml
+
+# IDE - Vim / Neovim
+*.swp
+*.swo
+.netrwhist
+Session.vim
+
+# IDE - Sublime Text
+*.sublime-workspace
+*.sublime-project
