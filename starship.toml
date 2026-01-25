@@ -246,7 +246,7 @@ trim_at = ''
 style = 'fg:white bg:gray'
 
 [cmd_duration]
-format = ' in $duration '
+format = ' in $duration '
 style = 'bg:gray'
 show_notifications = true
 min_time_to_notify = 600000
