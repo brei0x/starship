@@ -9,7 +9,7 @@ assignees: ''
 
 ## Problem statement
 A clear and concise description of what the problem is.
-Example: “When using this theme over SSH, I can’t easily see X, because Y…”
+Example: "When using this theme over SSH, I can't easily see X, because Y…"
 
 ## Proposed solution
 A clear and concise description of what you want to happen.
