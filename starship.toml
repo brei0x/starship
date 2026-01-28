@@ -134,102 +134,102 @@ diverged = '⇕⇡${ahead_count}⇣${behind_count}'
 deleted = ''
 
 [c]
-format = '[ $symbol ($version) ]($style)'
+format = '[ $symbol( $version) ]($style)'
 symbol = ''
 style = 'fg:black bg:yellow'
 
 [rust]
-format = '[ $symbol ($version) ]($style)'
+format = '[ $symbol( $version) ]($style)'
 symbol = ''
 style = 'fg:black bg:yellow'
 
 [golang]
-format = '[ $symbol ($version) ]($style)'
+format = '[ $symbol( $version) ]($style)'
 symbol = ''
 style = 'fg:black bg:yellow'
 
 [nodejs]
-format = '[ $symbol ($version) ]($style)'
+format = '[ $symbol( $version) ]($style)'
 symbol = ''
 style = 'fg:black bg:yellow'
 
 [php]
-format = '[ $symbol ($version) ]($style)'
+format = '[ $symbol( $version) ]($style)'
 symbol = ''
 style = 'fg:black bg:yellow'
 
 [java]
-format = '[ $symbol ($version) ]($style)'
+format = '[ $symbol( $version) ]($style)'
 symbol = ''
 style = 'fg:black bg:yellow'
 
 [kotlin]
-format = '[ $symbol ($version) ]($style)'
+format = '[ $symbol( $version) ]($style)'
 symbol = ''
 style = 'fg:black bg:yellow'
 
 [haskell]
-format = '[ $symbol ($version) ]($style)'
+format = '[ $symbol( $version) ]($style)'
 symbol = ''
 style = 'fg:black bg:yellow'
 
 [python]
-format = '[ $symbol ($version)(\(#$virtualenv\)) ]($style)'
+format = '[ $symbol( $version)(\(#$virtualenv\)) ]($style)'
 symbol = ''
 style = 'fg:black bg:yellow'
 
 [ruby]
-format = '[ $symbol ($version) ]($style)'
+format = '[ $symbol( $version) ]($style)'
 symbol = '󰫏'
 style = 'fg:black bg:yellow'
 
 [dotnet]
-format = '[ $symbol ($version) ]($style)'
+format = '[ $symbol( $version) ]($style)'
 symbol = ''
 style = 'fg:black bg:yellow'
 
 [swift]
-format = '[ $symbol ($version) ]($style)'
+format = '[ $symbol( $version) ]($style)'
 symbol = ''
 style = 'fg:black bg:yellow'
 
 [scala]
-format = '[ $symbol ($version) ]($style)'
+format = '[ $symbol( $version) ]($style)'
 symbol = ''
 style = 'fg:black bg:yellow'
 
 [dart]
-format = '[ $symbol ($version) ]($style)'
+format = '[ $symbol( $version) ]($style)'
 symbol = ''
 style = 'fg:black bg:yellow'
 
 [lua]
-format = '[ $symbol ($version) ]($style)'
+format = '[ $symbol( $version) ]($style)'
 symbol = ''
 style = 'fg:black bg:yellow'
 
 [rlang]
-format = '[ $symbol ($version) ]($style)'
+format = '[ $symbol( $version) ]($style)'
 symbol = '󰟔'
 style = 'fg:black bg:yellow'
 
 [perl]
-format = '[ $symbol ($version) ]($style)'
+format = '[ $symbol( $version) ]($style)'
 symbol = ''
 style = 'fg:black bg:yellow'
 
 [elixir]
-format = '[ $symbol ($version) ]($style)'
+format = '[ $symbol( $version) ]($style)'
 symbol = ''
 style = 'fg:black bg:yellow'
 
 [julia]
-format = '[ $symbol ($version) ]($style)'
+format = '[ $symbol( $version) ]($style)'
 symbol = ''
 style = 'fg:black bg:yellow'
 
 [terraform]
-format = '[ $symbol ($version) ]($style)'
+format = '[ $symbol( $version) ]($style)'
 symbol = '󱁢'
 style = 'fg:black bg:yellow'
 
