@@ -277,11 +277,11 @@ time_format = '%R'
 disabled = false
 
 [palettes.brei0x]
-blue = '#4668a6'      # Navy blue (directory, time, vim normal mode)
-green = '#4E9A06'     # Tango green (git branch/status, success prompt)
-yellow = '#C4A000'    # Tango gold (languages, vim replace/visual modes)
-red = '#A63D40'       # Soft crimson (root user, read-only, error prompt)
-gray = '#3e4451'      # Dark gray (OS icon, local IP, memory usage)
-muted = '#5c6370'     # Muted gray (fill separator)
-white = '#abb2bf'     # Off-white (text on gray backgrounds)
-black = '#282c34'     # Charcoal (text on colored backgrounds)
+blue = '#4668a6'   # Navy blue (directory, time, vim normal mode)
+green = '#4E9A06'  # Tango green (git branch/status, success prompt)
+yellow = '#C4A000' # Tango gold (languages, vim replace/visual modes)
+red = '#A63D40'    # Soft crimson (root user, read-only, error prompt)
+gray = '#3e4451'   # Dark gray (OS icon, local IP, memory usage)
+muted = '#5c6370'  # Muted gray (fill separator)
+white = '#abb2bf'  # Off-white (text on gray backgrounds)
+black = '#282c34'  # Charcoal (text on colored backgrounds)
