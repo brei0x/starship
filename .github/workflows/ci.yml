@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  validate-toml:
+    name: Validate TOML Syntax
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install taplo
+        run: |
+          curl -fsSL https://github.com/tamasfe/taplo/releases/latest/download/taplo-linux-x86_64.gz \
+          | gzip -d - | install -m 755 /dev/stdin /usr/local/bin/taplo
+
+      - name: Validate starship.toml
+        run: taplo check starship.toml
+
+      - name: Format check
+        run: taplo fmt --check starship.toml
+
+  validate-starship:
+    name: Validate Starship Config
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install Starship
+        run: curl -sS https://starship.rs/install.sh | sh -s -- --yes
+
+      - name: Validate config
+        run: |
+          export STARSHIP_CONFIG=${{ github.workspace }}/starship.toml
+          starship print-config --default false 2>&1 | tee output.txt
+          if grep -qi "error\|invalid\|unknown" output.txt; then
+            echo "Starship config validation failed"
+            exit 1
+          fi
+          echo "Config is valid"
+
+  check-links:
+    name: Check Links
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Check links in Markdown
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --verbose --no-progress '**/*.md'
+          fail: true
