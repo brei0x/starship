@@ -10,6 +10,8 @@ jobs:
   validate-toml:
     name: Validate TOML Syntax
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v5
 
@@ -27,6 +29,8 @@ jobs:
   validate-starship:
     name: Validate Starship Config
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v5
 
@@ -46,6 +50,8 @@ jobs:
   check-links:
     name: Check Links
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v5
 
