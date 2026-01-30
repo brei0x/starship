@@ -4,7 +4,37 @@ A clean and professional Starship prompt theme inspired by Powerlevel10k, featur
 
 ## Preview
 
-![Preview](screenshots/preview.png)
+### Basic prompt
+![Basic](screenshots/starship-theme-brei0x-base.png)
+*Minimal prompt showing OS icon, home directory, memory usage and time.*
+
+### Git integration
+![Git](screenshots/starship-theme-brei0x-base-git.png)
+*Git branch and status indicators (modified files, staged changes).*
+
+### Read-only directory
+![Read-only](screenshots/starship-theme-brei0x-base-readonly.png)
+*Lock icon indicates a read-only directory.*
+
+### Full prompt with Terraform
+![Terraform](screenshots/starship-theme-brei0x-full-tf.png)
+*Complete prompt with username, git, Terraform version, and SSH hostname.*
+
+### Without username
+![Without user](screenshots/starship-theme-brei0x-tf-without-user.png)
+*Same context but with username hidden (default behavior for non-root users).*
+
+### Root user with Python
+![Root Python](screenshots/starship-theme-brei0x-full-root-py.png)
+*Root user highlighted in red, Python version and virtualenv support.*
+
+### 12-hour time format
+![12h time](screenshots/starship-theme-brei0x-time-12h.png)
+*Alternative time format configuration (12-hour with AM/PM).*
+
+### Command duration + false/error prompt
+![Duration](screenshots/starship-theme-brei0x-duration-false.png)
+*Command execution time displayed after long-running commands + false/error prompt.*
 
 ## Features
 
@@ -107,21 +137,25 @@ You can customize this theme by editing `~/.config/starship.toml`.
 ### Modify the color palette
 ```toml
 [palettes.brei0x]
-blue = "#4668a6"      # Navy blue
-green = "#4E9A06"     # Tango green
-yellow = "#C4A000"    # Tango gold
-red = "#A63D40"       # Soft crimson
-gray = "#3e4451"      # Dark gray
-muted = "#5c6370"     # Muted gray
-white = "#abb2bf"     # Off-white
-black = "#282c34"     # Charcoal
+blue = '#4668a6'   # Navy blue
+green = '#4E9A06'  # Tango green
+yellow = '#C4A000' # Tango gold
+red = '#A63D40'    # Soft crimson
+gray = '#3e4451'   # Dark gray
+muted = '#5c6370'  # Muted gray
+white = '#abb2bf'  # Off-white
+black = '#282c34'  # Charcoal
 ```
 
 ### Add directory substitutions
 ```toml
 [directory.substitutions]
-"Projects" = " "
-"Work" = " "
+'Work' = '󰠮 '
+'Desktop' = '󰇄 '
+'Videos' = '󰕧 '
+'Games' = '󰊖 '
+'Dropbox' = '󰇣 '
+'Google Drive' = '󰊶 '
 ```
 
 ### Show username always (not just for root/SSH)
@@ -139,44 +173,10 @@ ssh_only = false
 ### Switch to 12-hour time format
 ```toml
 [time]
-time_format = "%I:%M %p"  # e.g., 09:07 PM
+time_format = '%I:%M %p'  # e.g., 09:07 PM
 ```
 
 See the [Starship documentation](https://starship.rs/config/) for more options.
-
-## Screenshots
-
-### Basic prompt
-![Basic](screenshots/starship-theme-brei0x-base.png)
-*Minimal prompt showing OS icon, home directory, memory usage and time.*
-
-### Git integration
-![Git](screenshots/starship-theme-brei0x-base-git.png)
-*Git branch and status indicators (modified files, staged changes).*
-
-### Read-only directory
-![Read-only](screenshots/starship-theme-brei0x-base-readonly.png)
-*Lock icon indicates a read-only directory.*
-
-### Full prompt with Terraform
-![Terraform](screenshots/starship-theme-brei0x-full-tf.png)
-*Complete prompt with username, git, Terraform version, and SSH hostname.*
-
-### Without username
-![Without user](screenshots/starship-theme-brei0x-tf-without-user.png)
-*Same context but with username hidden (default behavior for non-root users).*
-
-### Root user with Python
-![Root Python](screenshots/starship-theme-brei0x-full-root-py.png)
-*Root user highlighted in red, Python version and virtualenv support.*
-
-### 12-hour time format
-![12h time](screenshots/starship-theme-brei0x-time-12h.png)
-*Alternative time format configuration (12-hour with AM/PM).*
-
-### Command duration + false/error prompt
-![Duration](screenshots/starship-theme-brei0x-duration-false.png)
-*Command execution time displayed after long-running commands + false/error prompt.*
 
 ## License
 
