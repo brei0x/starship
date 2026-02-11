@@ -256,8 +256,8 @@ style = 'fg:muted'
 symbol = '-'
 
 [character]
-success_symbol = '[❯](bold fg:green)'
-error_symbol = '[❯](bold fg:red)'
+success_symbol = '[❯](bold fg:muted)'
+error_symbol = '[❯](bold fg:muted)'
 vimcmd_symbol = '[❮](bold fg:blue)'
 vimcmd_replace_one_symbol = '[❮](bold fg:yellow)'
 vimcmd_replace_symbol = '[❮](bold fg:yellow)'
