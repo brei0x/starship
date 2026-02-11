@@ -46,7 +46,7 @@ $character
 palette = 'brei0x'
 
 # A continuation prompt that displays two filled-in arrows
-continuation_prompt = '▶▶ '
+continuation_prompt = '[❯❯](bold fg:muted)'
 
 [os]
 format = '[$symbol]($style)'
