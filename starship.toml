@@ -240,7 +240,7 @@ style = 'fg:black bg:yellow'
 
 [hostname]
 format = '[ $ssh_symbol$hostname]($style)'
-#ssh_only = false
+ssh_only = false
 ssh_symbol = ' '
 trim_at = ''
 style = 'fg:white bg:gray'
