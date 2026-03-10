@@ -41,142 +41,34 @@ A clean and professional Starship prompt theme inspired by Powerlevel10k, featur
 - **Two-line prompt** with powerline-style segments
 - **OS detection** with custom icons for 40+ operating systems
 - **Git integration** showing branch name and status (ahead/behind/diverged)
-- **Multi-language support** for 20 programming languages and tools
+- **Multi-language support** for 20+ programming languages and tools
 - **System monitoring** with memory usage percentage
 - **SSH hostname display** with dedicated icon
-- **Command duration** tracking with desktop notifications
-- **Vim mode indicators** for vi-style keybindings (normal, replace, visual modes)
+- **Command duration** tracking
+- **Vim mode indicators** (normal, replace, visual)
 - **Read-only directory indicator** with lock icon
 - **Smart path truncation** with folder icon substitutions
 - **Custom color palette** with professional, muted tones
 
 ## Installation
 
-### Method 1: Direct download
+**Requirements**: [Starship](https://starship.rs/) and a [Nerd Font](https://www.nerdfonts.com/) (recommended: FiraCode Nerd Font or JetBrainsMono Nerd Font). See the [Installation wiki page](../../wiki/Installation) for full setup instructions.
+
 ```bash
-# Using curl
 curl -o ~/.config/starship.toml https://raw.githubusercontent.com/brei0x/starship/main/starship.toml
-
-# Or using wget
-wget -O ~/.config/starship.toml https://raw.githubusercontent.com/brei0x/starship/main/starship.toml
 ```
 
-### Method 2: Git clone
-```bash
-# Clone the repository
-git clone https://github.com/brei0x/starship.git
+## Documentation
 
-# Copy the configuration file
-cp starship/starship.toml ~/.config/starship.toml
-```
+Full documentation is available in the [wiki](../../wiki):
 
-## Requirements
-
-- [Starship](https://starship.rs/) installed and configured in your shell
-- A [Nerd Font](https://www.nerdfonts.com/) installed and set as your terminal font (recommended: FiraCode Nerd Font, JetBrainsMono Nerd Font)
-- Supported shells: Bash, Zsh, Fish, PowerShell
-
-## Modules Included
-
-### Left Side (Line 1)
-| Module | Description |
-|--------|-------------|
-| **OS** | Detects and displays your operating system icon |
-| **Username** | Shows current user (with red background for root) |
-| **Directory** | Smart path truncation with read-only indicator |
-| **Git Branch** | Current branch name with icon |
-| **Git Status** | Shows ahead/behind/diverged status |
-| **Languages** | C, Rust, Go, Node.js, PHP, Java, Kotlin, Haskell, Python, Ruby, C#/.NET, Swift, Scala, Dart, Lua, R, Perl, Elixir, Julia |
-| **Terraform** | Version display |
-| **Hostname** | SSH hostname with icon (SSH sessions only) |
-| **Command Duration** | Execution time of long-running commands |
-
-### Right Side (Line 1)
-| Module | Description |
-|--------|-------------|
-| **Memory Usage** | RAM usage percentage |
-| **Time** | Current time in HH:MM format |
-
-### Line 2
-| Module | Description |
-|--------|-------------|
-| **Character** | Prompt symbol with success/error colors and vim mode indicators |
-
-## Directory Substitutions
-
-The theme includes smart folder icon substitutions:
-
-| Folder |
-|--------|
-| `~` (Home) |
-| `Developer` |
-| `Documents` |
-| `Downloads` |
-| `Music` |
-| `Pictures` |
-
-## Color Palette
-
-The theme uses a custom `brei0x` palette with professional, muted colors:
-
-| Color  | Hex       | Usage                                    |
-|--------|-----------|------------------------------------------|
-| Blue   | `#4668a6` | Directory, time, vim normal mode         |
-| Green  | `#4E9A06` | Git branch/status, success prompt        |
-| Yellow | `#C4A000` | Programming languages, vim replace/visual modes |
-| Red    | `#A63D40` | Root user, read-only indicator, error prompt |
-| Gray   | `#3e4451` | OS icon, hostname, memory usage          |
-| Muted  | `#5c6370` | Fill separator                           |
-| White  | `#abb2bf` | Text on gray backgrounds                 |
-| Black  | `#282c34` | Text on colored backgrounds              |
-
-## Customization
-
-You can customize this theme by editing `~/.config/starship.toml`.
-
-### Modify the color palette
-```toml
-[palettes.brei0x]
-blue = '#4668a6'   # Navy blue
-green = '#4E9A06'  # Tango green
-yellow = '#C4A000' # Tango gold
-red = '#A63D40'    # Soft crimson
-gray = '#3e4451'   # Dark gray
-muted = '#5c6370'  # Muted gray
-white = '#abb2bf'  # Off-white
-black = '#282c34'  # Charcoal
-```
-
-### Add directory substitutions
-```toml
-[directory.substitutions]
-'Work' = '󰠮 '
-'Desktop' = '󰇄 '
-'Videos' = '󰕧 '
-'Games' = '󰊖 '
-'Dropbox' = '󰇣 '
-'Google Drive' = '󰊶 '
-```
-
-### Show username always (not just for root/SSH)
-```toml
-[username]
-show_always = true
-```
-
-### Show hostname always (not just for SSH)
-```toml
-[hostname]
-ssh_only = false
-```
-
-### Switch to 12-hour time format
-```toml
-[time]
-time_format = '%I:%M %p'  # e.g., 09:07 PM
-```
-
-See the [Starship documentation](https://starship.rs/config/) for more options.
+| Page | Description |
+|------|-------------|
+| [Installation](../../wiki/Installation) | Installation methods and shell requirements |
+| [Modules](../../wiki/Modules) | All prompt modules and directory substitutions |
+| [Color Palette](../../wiki/Color-Palette) | Theme colors and hex values |
+| [Customization](../../wiki/Customization) | How to personalize the theme |
+| [Development](../../wiki/Development) | Validation, formatting, and contribution guide |
 
 ## License
 
