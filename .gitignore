@@ -1,33 +1,83 @@
-# OS - macOS
-.DS_Store
-.AppleDouble
-.LSOverride
+############################################
+# Secrets / local env
+############################################
+.env
+.env.*
+
+############################################
+# OS files (macOS / Windows / Linux)
+############################################
+
+# macOS
 ._*
+.AppleDouble
+.DS_Store
+.DS_Store?
+.fseventsd
+.LSOverride
 .Spotlight-V100
 .Trashes
+.VolumeIcon.icns
 
-# OS - Windows
-Thumbs.db
-ehthumbs.db
-Desktop.ini
+# Windows
 $RECYCLE.BIN/
+*.lnk
+Desktop.ini
+ehthumbs.db
+ehthumbs_vista.db
+Thumbs.db
+Thumbs.db:encryptable
 
-# OS - Linux
+# Linux / common desktop
 *~
+.directory
+.fuse_hidden*
+.nfs*
+.Trash-*
 
-# IDE - VS Code
+############################################
+# Editors / IDEs
+############################################
+
+# AI assistants
+.aider*
+!.aider.conf.yml
+.claude/
+!.claude/CLAUDE.md
+!.claude/rules/
+.codeium/
+.continue/
+.cursor/
+
+# JetBrains (IntelliJ IDEA, PhpStorm, PyCharm, WebStorm...)
+*.iml
+*.ipr
+*.iws
+.idea/
+out/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim swap / temp
+*.swn
+*.swo
+*.swp
+
+# VS Code
+*.code-workspace
 .vscode/
 
-# IDE - JetBrains (IntelliJ, WebStorm, PyCharm, etc.)
-.idea/
-*.iml
-
-# IDE - Vim / Neovim
-*.swp
-*.swo
-.netrwhist
-Session.vim
-
-# IDE - Sublime Text
-*.sublime-workspace
-*.sublime-project
+############################################
+# Generic noise
+############################################
+**/.cache/
+*.bak
+*.log
+*.old
+*.orig
+*.tmp
+.cache/
+.temp/
+.tmp/
