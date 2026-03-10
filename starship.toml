@@ -239,7 +239,7 @@ symbol = ''
 style = 'fg:black bg:yellow'
 
 [hostname]
-format = '[ $ssh_symbol$hostname]($style)'
+format = '[  $hostname]($style)'
 ssh_only = false
 ssh_symbol = ' '
 trim_at = ''
