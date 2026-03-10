@@ -1,4 +1,0 @@
-[base]
-# Exclude GitHub wiki links — they resolve as local file:// paths in CI
-# but are valid relative links on GitHub
-exclude = ["file://.*wiki"]

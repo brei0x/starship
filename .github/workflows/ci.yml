@@ -58,5 +58,5 @@ jobs:
       - name: Check links in Markdown
         uses: lycheeverse/lychee-action@v2
         with:
-          args: --verbose --no-progress '**/*.md'
+          args: --verbose --no-progress --exclude 'file://.*wiki' '**/*.md'
           fail: true
