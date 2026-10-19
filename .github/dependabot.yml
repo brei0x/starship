@@ -1,17 +1,15 @@
-# Please see the documentation for all configuration options:
-# https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
-
+# Dependabot updates. Security PRs ignore this schedule, the PR limit and the cooldown.
 version: 2
 updates:
-  - package-ecosystem: "github-actions"
-    directory: "/"
+  - package-ecosystem: github-actions
+    directory: /
     schedule:
-      interval: "weekly"
-      day: "monday"
-    cooldown:
+      interval: daily
+      time: '10:00'
+      timezone: Europe/Paris
+    cooldown: # a hijacked release is usually pulled within days; never be its first install
       default-days: 7
-    commit-message:
-      prefix: "ci"
-    labels:
-      - "dependencies"
-      - "github-actions"
+    labels: [dependencies]
+    groups:
+      actions:
+        patterns: ['*']
