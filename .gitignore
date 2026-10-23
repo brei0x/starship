@@ -81,3 +81,6 @@ out/
 .cache/
 .temp/
 .tmp/
+
+# Python
+__pycache__/

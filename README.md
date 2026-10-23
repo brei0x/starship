@@ -69,6 +69,7 @@ Full documentation is available in the [wiki](../../wiki):
 | [Color Palette](../../wiki/Color-Palette) | Theme colors and hex values |
 | [Customization](../../wiki/Customization) | How to personalize the theme |
 | [Development](../../wiki/Development) | Validation, formatting, and contribution guide |
+| [Setup](docs/SETUP.md) | Validation commands, screenshot regeneration, release flow |
 
 ## License
 
