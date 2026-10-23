@@ -66,3 +66,22 @@ jobs:
         with:
           args: --verbose --no-progress --exclude 'file://.*wiki' '**/*.md'
           fail: true
+
+  automerge:
+    needs: [validate-toml, validate-starship, check-links]
+    if: github.event_name == 'pull_request' && github.event.pull_request.user.login == 'dependabot[bot]'
+    uses: tekalib/.workflows/.github/workflows/dependabot-automerge.yml@1494e487e05e771c4103be2ba30ce1716dde519c # v1.1.0
+    permissions:
+      contents: read
+      pull-requests: read
+    secrets:
+      app-key: ${{ secrets.AUTOMATION_APP_KEY }}
+
+  release:
+    needs: [validate-toml, validate-starship, check-links]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    uses: tekalib/.workflows/.github/workflows/release.yml@1494e487e05e771c4103be2ba30ce1716dde519c # v1.1.0
+    permissions:
+      contents: write
+    with:
+      sha: ${{ github.sha }}
