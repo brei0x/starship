@@ -13,7 +13,6 @@ CELL_WIDTH = 0.6 * FONT_SIZE  # JetBrains Mono advance, icons included
 LINE_PITCH = 1.32 * FONT_SIZE
 GLYPH_ABOVE = 1.027 * FONT_SIZE  # powerline glyph box of the Nerd Font, yMax 1027 / yMin -307 per 1000 UPM
 GLYPH_BELOW = 0.307 * FONT_SIZE
-WINDOW_WIDTH = 1040
 MARGIN, PADDING, TITLE_BAR = 30, 28, 40
 BACKGROUND, FOREGROUND = "#282c34", "#abb2bf"
 TRAFFIC_LIGHTS = ("#ff5f57", "#febc2e", "#28c840")
@@ -62,8 +61,11 @@ def main():
     x0 = MARGIN + PADDING
     baseline0 = MARGIN + TITLE_BAR + PADDING + GLYPH_ABOVE
     height = MARGIN + TITLE_BAR + PADDING + rows * LINE_PITCH + PADDING + MARGIN
+    runs = list(parse(text))
+    columns = max(col + len(chunk) for _, col, chunk, *_ in runs)
+    window_width = round(2 * PADDING + columns * CELL_WIDTH)  # the window hugs the widest line
     rects, texts = [], []
-    for row, col, chunk, fg, bg, bold in parse(text):
+    for row, col, chunk, fg, bg, bold in runs:
         x = x0 + col * CELL_WIDTH
         baseline = baseline0 + row * LINE_PITCH
         if bg:
@@ -74,11 +76,11 @@ def main():
     lights = "".join('<circle cx="%d" cy="%d" r="6" fill="%s"/>' % (MARGIN + 20 + i * 20, MARGIN + 20, c)
                      for i, c in enumerate(TRAFFIC_LIGHTS))
     print('<svg xmlns="http://www.w3.org/2000/svg" width="%d" height="%.0f" viewBox="0 0 %d %.0f">'
-          % (WINDOW_WIDTH + 2 * MARGIN, height, WINDOW_WIDTH + 2 * MARGIN, height))
+          % (window_width + 2 * MARGIN, height, window_width + 2 * MARGIN, height))
     print('<defs><filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">'
           '<feDropShadow dx="0" dy="12" stdDeviation="10" flood-opacity="0.45"/></filter></defs>')
     print('<rect x="%d" y="%d" width="%d" height="%.0f" rx="10" fill="%s" filter="url(#shadow)"/>'
-          % (MARGIN, MARGIN, WINDOW_WIDTH, height - 2 * MARGIN, BACKGROUND))
+          % (MARGIN, MARGIN, window_width, height - 2 * MARGIN, BACKGROUND))
     print(lights)
     print("\n".join(rects))
     print('<g font-family="%s" font-size="%d" xml:space="preserve">' % (escape(font), FONT_SIZE))

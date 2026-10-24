@@ -17,9 +17,9 @@ STARSHIP_CONFIG=./starship.toml starship print-config --default false
 sh scripts/screenshots.sh
 ```
 
-Writes `screenshots/starship-theme-brei0x-*.png` (2200 px wide, 2x) from `starship.toml`: one `preview`
-sequence and one image per state (`home`, `git`, `languages`, `ssh`, `read-only`, `duration-error`, `vim`).
-Every state is rendered by `starship prompt` against temporary fixtures, so no real shell, repository or
+Writes `screenshots/starship-theme-brei0x-*.png` (117 columns, about 2230 px wide at 2x) from
+`starship.toml`: one `preview` sequence and one image per state (`home`, `git`, `languages`, `ssh`,
+`read-only`, `duration-error`, `vim`). Every state is rendered by `starship prompt` against temporary fixtures, so no real shell, repository or
 server is involved: the git state is a scratch repository one commit ahead with modified, staged and
 untracked files, the SSH state sets `SSH_CONNECTION`, the hostname is rewritten to `hostname.net`.
 
