@@ -30,7 +30,7 @@ A clean and professional Starship prompt theme inspired by Powerlevel10k, featur
 ![Vim](screenshots/starship-theme-brei0x-vim.png)
 *The prompt character flips when the line editor is in normal mode.*
 
-Regenerate these images with `sh scripts/screenshots.sh`, see [docs/SETUP.md](docs/SETUP.md).
+Regenerate these images with `sh scripts/screenshots.sh`, see the [Development](../../wiki/Development#screenshots) wiki page.
 
 ## Features
 
@@ -64,8 +64,7 @@ Full documentation is available in the [wiki](../../wiki):
 | [Modules](../../wiki/Modules) | All prompt modules and directory substitutions |
 | [Color Palette](../../wiki/Color-Palette) | Theme colors and hex values |
 | [Customization](../../wiki/Customization) | How to personalize the theme |
-| [Development](../../wiki/Development) | Validation, formatting, and contribution guide |
-| [Setup](docs/SETUP.md) | Validation commands, screenshot regeneration, release flow |
+| [Development](../../wiki/Development) | Local checks, screenshots, releases and contribution guide |
 
 ## License
 
