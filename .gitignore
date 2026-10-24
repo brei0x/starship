@@ -1,83 +1,21 @@
-############################################
-# Secrets / local env
-############################################
-.env
-.env.*
-
-############################################
-# OS files (macOS / Windows / Linux)
-############################################
-
-# macOS
-._*
-.AppleDouble
+# ── OS / IDE noise ────────────────────────────────────────────────────────────
 .DS_Store
-.DS_Store?
-.fseventsd
-.LSOverride
-.Spotlight-V100
-.Trashes
-.VolumeIcon.icns
-
-# Windows
-$RECYCLE.BIN/
-*.lnk
-Desktop.ini
-ehthumbs.db
-ehthumbs_vista.db
 Thumbs.db
-Thumbs.db:encryptable
-
-# Linux / common desktop
-*~
-.directory
-.fuse_hidden*
-.nfs*
-.Trash-*
-
-############################################
-# Editors / IDEs
-############################################
-
-# AI assistants
-.aider*
-!.aider.conf.yml
-.claude/
-!.claude/CLAUDE.md
-!.claude/rules/
-.codeium/
-.continue/
-.cursor/
-
-# JetBrains (IntelliJ IDEA, PhpStorm, PyCharm, WebStorm...)
-*.iml
-*.ipr
-*.iws
+.vscode/
 .idea/
-out/
-
-# Sublime Text
-*.sublime-project
-*.sublime-workspace
-
-# Vim swap / temp
-*.swn
-*.swo
 *.swp
 
-# VS Code
-*.code-workspace
-.vscode/
+# ── Secrets ───────────────────────────────────────────────────────────────────
+.env
+.env.*
+*.pem
+*.key
 
-############################################
-# Generic noise
-############################################
-**/.cache/
-*.bak
+# ── Temp / logs ───────────────────────────────────────────────────────────────
 *.log
-*.old
-*.orig
 *.tmp
-.cache/
-.temp/
-.tmp/
+*.bak
+*.orig
+
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/

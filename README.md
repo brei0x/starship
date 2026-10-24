@@ -4,37 +4,33 @@ A clean and professional Starship prompt theme inspired by Powerlevel10k, featur
 
 ## Preview
 
-### Basic prompt
-![Basic](screenshots/starship-theme-brei0x-base.png)
-*Minimal prompt showing OS icon, home directory, memory usage and time.*
+![Preview](screenshots/starship-theme-brei0x-preview.png)
 
-### Git integration
-![Git](screenshots/starship-theme-brei0x-base-git.png)
-*Git branch and status indicators (modified files, staged changes).*
+### Git repository
+![Git](screenshots/starship-theme-brei0x-git.png)
+*Branch, then modified, staged and untracked files, one commit ahead, and the Terraform version.*
+
+### Languages
+![Languages](screenshots/starship-theme-brei0x-languages.png)
+*Node.js and Python detected from the project files.*
+
+### SSH session
+![SSH](screenshots/starship-theme-brei0x-ssh.png)
+*The username appears over SSH (and for root), the hostname is always shown.*
 
 ### Read-only directory
-![Read-only](screenshots/starship-theme-brei0x-base-readonly.png)
-*Lock icon indicates a read-only directory.*
+![Read-only](screenshots/starship-theme-brei0x-read-only.png)
+*A lock marks a directory you cannot write to.*
 
-### Full prompt with Terraform
-![Terraform](screenshots/starship-theme-brei0x-full-tf.png)
-*Complete prompt with username, git, Terraform version, and SSH hostname.*
+### Command duration
+![Duration](screenshots/starship-theme-brei0x-duration-error.png)
+*Execution time after a long-running command.*
 
-### Without username
-![Without user](screenshots/starship-theme-brei0x-tf-without-user.png)
-*Same context but with username hidden (default behavior for non-root users).*
+### Vim normal mode
+![Vim](screenshots/starship-theme-brei0x-vim.png)
+*The prompt character flips when the line editor is in normal mode.*
 
-### Root user with Python
-![Root Python](screenshots/starship-theme-brei0x-full-root-py.png)
-*Root user highlighted in red, Python version and virtualenv support.*
-
-### 12-hour time format
-![12h time](screenshots/starship-theme-brei0x-time-12h.png)
-*Alternative time format configuration (12-hour with AM/PM).*
-
-### Command duration + false/error prompt
-![Duration](screenshots/starship-theme-brei0x-duration-false.png)
-*Command execution time displayed after long-running commands + false/error prompt.*
+Regenerate these images with `sh scripts/screenshots.sh`, see [docs/SETUP.md](docs/SETUP.md).
 
 ## Features
 
@@ -69,6 +65,7 @@ Full documentation is available in the [wiki](../../wiki):
 | [Color Palette](../../wiki/Color-Palette) | Theme colors and hex values |
 | [Customization](../../wiki/Customization) | How to personalize the theme |
 | [Development](../../wiki/Development) | Validation, formatting, and contribution guide |
+| [Setup](docs/SETUP.md) | Validation commands, screenshot regeneration, release flow |
 
 ## License
 
