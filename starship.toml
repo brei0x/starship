@@ -102,7 +102,6 @@ Windows = '󰍲 '
 format = '[  $user ]($style)'
 style_root = 'bg:red fg:black bold'
 style_user = 'bg:white fg:black'
-#show_always = true
 
 [directory]
 truncation_length = 3
@@ -239,10 +238,9 @@ symbol = ''
 style = 'fg:black bg:yellow'
 
 [hostname]
-#format = '[ $ssh_symbol$hostname]($style)'
-format = '[  $hostname]($style)' # fix
+format = '[ $ssh_symbol $hostname]($style)'
 ssh_only = false
-ssh_symbol = ' '
+ssh_symbol = '󰣀 '
 trim_at = ''
 style = 'fg:white bg:gray'
 
@@ -274,7 +272,6 @@ disabled = false
 format = '[  $time]($style)'
 style = 'fg:black bg:blue'
 time_format = '%R'
-#time_format = '%I:%M %p'
 disabled = false
 
 [palettes.brei0x]
