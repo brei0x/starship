@@ -8,7 +8,7 @@ ROOT=$(cd "$(dirname "$0")/.." && pwd)
 OUT=$ROOT/screenshots
 PREFIX=starship-theme-brei0x-
 FAMILY="JetBrainsMono Nerd Font" # not the Mono variant: its icons are shrunk to one cell
-COLUMNS=96
+COLUMNS=117 # the SVG window is sized from it
 WORK=$(mktemp -d)
 trap 'chmod -R u+w "$WORK"; rm -rf "$WORK"' EXIT
 
