@@ -34,7 +34,8 @@ brew install --cask font-jetbrains-mono-nerd-font
 ```
 
 The font must be the plain `JetBrainsMono Nerd Font`, not the `Mono` variant whose icons are shrunk
-to one cell. `⇡` and `⇣` are not in the font and fall back to a system font, as in a terminal.
+to one cell. Every glyph in `starship.toml` must exist in it, or resvg warns and falls back to a
+system font.
 
 Not reproducible this way, so not captured: the root user (uid 0). Time and memory values change on
 every run, so a regeneration always produces a diff.
