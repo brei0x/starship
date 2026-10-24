@@ -1,5 +1,6 @@
 #!/bin/sh
-# Renders the README screenshots from starship.toml into screenshots/. Runbook: docs/SETUP.md
+# Renders the README screenshots from starship.toml into screenshots/.
+# Runbook: https://github.com/brei0x/starship/wiki/Development#screenshots
 # The displayed path is a label starship renders as is, substituting its leading ~ itself.
 # shellcheck disable=SC2088
 set -eu
@@ -13,7 +14,7 @@ WORK=$(mktemp -d)
 trap 'chmod -R u+w "$WORK"; rm -rf "$WORK"' EXIT
 
 for tool in starship resvg python3; do
-  command -v "$tool" > /dev/null || { echo "$tool is required, see docs/SETUP.md" >&2; exit 1; }
+  command -v "$tool" > /dev/null || { echo "$tool is required, see https://github.com/brei0x/starship/wiki/Development#screenshots" >&2; exit 1; }
 done
 resvg --list-fonts 2> /dev/null | grep -c "$FAMILY" > /dev/null || { echo "font not installed: $FAMILY" >&2; exit 1; }
 
