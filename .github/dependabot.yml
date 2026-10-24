@@ -1,14 +1,16 @@
 # Dependabot updates. Security PRs ignore this schedule, the PR limit and the cooldown.
+# Auto-merge policy: the `automerge` job of .github/workflows/ci.yml.
 version: 2
 updates:
   - package-ecosystem: github-actions
     directory: /
     schedule:
-      interval: daily
+      interval: daily # a tekalib/.workflows release lands within a day; others still wait 7
       time: '10:00'
       timezone: Europe/Paris
     cooldown: # a hijacked release is usually pulled within days; never be its first install
       default-days: 7
+      exclude: ['tekalib/.workflows*'] # ours, released on purpose: adopted on the next run
     labels: [dependencies]
     groups:
       actions:
