@@ -6,6 +6,17 @@ on:
   push:
     branches: [main]
 
+permissions:
+  contents: read
+
+# Tools are pinned by version and SHA-256, not installed from `latest`; Dependabot cannot bump these.
+env:
+  TAPLO_VERSION: 0.10.0
+  TAPLO_SHA256: 8fe196b894ccf9072f98d4e1013a180306e17d244830b03986ee5e8eabeb6156 # taplo-linux-x86_64.gz
+  STARSHIP_VERSION: v1.27.0
+  STARSHIP_SHA256: 10c8eb4cb3b761d9bf59ea828444c2dab36c900b7d69a69e08814b286969df89 # x86_64-unknown-linux-musl
+  ZIZMOR: zizmor==1.31.1
+
 jobs:
   validate-toml:
     name: Validate TOML Syntax
@@ -19,8 +30,12 @@ jobs:
 
       - name: Install taplo
         run: |
-          curl -fsSL https://github.com/tamasfe/taplo/releases/latest/download/taplo-linux-x86_64.gz \
-          | gzip -d - | install -m 755 /dev/stdin /usr/local/bin/taplo
+          curl -fsSL -o "$RUNNER_TEMP/taplo.gz" \
+            "https://github.com/tamasfe/taplo/releases/download/$TAPLO_VERSION/taplo-linux-x86_64.gz"
+          echo "$TAPLO_SHA256  $RUNNER_TEMP/taplo.gz" | sha256sum -c -
+          gzip -d "$RUNNER_TEMP/taplo.gz"
+          install -m 755 "$RUNNER_TEMP/taplo" /usr/local/bin/taplo
+          taplo --version
 
       - name: Validate starship.toml
         run: taplo check starship.toml
@@ -39,13 +54,19 @@ jobs:
           persist-credentials: false
 
       - name: Install Starship
-        run: curl -sS https://starship.rs/install.sh | sh -s -- --yes
+        run: |
+          curl -fsSL -o "$RUNNER_TEMP/starship.tar.gz" \
+            "https://github.com/starship/starship/releases/download/$STARSHIP_VERSION/starship-x86_64-unknown-linux-musl.tar.gz"
+          echo "$STARSHIP_SHA256  $RUNNER_TEMP/starship.tar.gz" | sha256sum -c -
+          tar -xzf "$RUNNER_TEMP/starship.tar.gz" -C "$RUNNER_TEMP" starship
+          install -m 755 "$RUNNER_TEMP/starship" /usr/local/bin/starship
+          starship --version
 
       - name: Validate config
         run: |
-          export STARSHIP_CONFIG=${{ github.workspace }}/starship.toml
-          starship print-config --default false 2>&1 | tee output.txt
-          if grep -qi "error\|invalid\|unknown" output.txt; then
+          export STARSHIP_CONFIG="$GITHUB_WORKSPACE/starship.toml"
+          starship print-config --default false 2>&1 | tee "$RUNNER_TEMP/output.txt"
+          if grep -qi "error\|invalid\|unknown" "$RUNNER_TEMP/output.txt"; then
             echo "Starship config validation failed"
             exit 1
           fi
@@ -67,8 +88,21 @@ jobs:
           args: --verbose --no-progress --exclude 'file://.*wiki' '**/*.md'
           fail: true
 
+  workflows:
+    name: Workflow audit
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - run: pipx run "$ZIZMOR" --format github .github
+        env:
+          GH_TOKEN: ${{ github.token }} # online audits: impostor commits, SHA and tag mismatches
+
   automerge:
-    needs: [validate-toml, validate-starship, check-links]
+    needs: [validate-toml, validate-starship, check-links, workflows]
     if: github.event_name == 'pull_request' && github.event.pull_request.user.login == 'dependabot[bot]'
     uses: tekalib/.workflows/.github/workflows/dependabot-automerge.yml@1494e487e05e771c4103be2ba30ce1716dde519c # v1.1.0
     permissions:
@@ -78,7 +112,7 @@ jobs:
       app-key: ${{ secrets.AUTOMATION_APP_KEY }}
 
   release:
-    needs: [validate-toml, validate-starship, check-links]
+    needs: [validate-toml, validate-starship, check-links, workflows]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     uses: tekalib/.workflows/.github/workflows/release.yml@1494e487e05e771c4103be2ba30ce1716dde519c # v1.1.0
     permissions:
