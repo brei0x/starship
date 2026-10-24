@@ -30,6 +30,7 @@ $perl\
 $elixir\
 $julia\
 $terraform\
+$docker_context\
 [](fg:yellow bg:gray)\
 $hostname\
 [ ](fg:gray)\
