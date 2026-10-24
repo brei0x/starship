@@ -103,6 +103,7 @@ Windows = '󰍲 '
 format = '[  $user ]($style)'
 style_root = 'bg:red fg:black bold'
 style_user = 'bg:white fg:black'
+#show_always = true
 
 [directory]
 truncation_length = 3
@@ -272,6 +273,7 @@ disabled = false
 [time]
 format = '[  $time]($style)'
 style = 'fg:black bg:blue'
+#time_format = '%I:%M %p'
 time_format = '%R'
 disabled = false
 
