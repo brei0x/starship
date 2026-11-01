@@ -2,6 +2,10 @@
 
 A clean and professional Starship prompt theme inspired by Powerlevel10k, featuring a two-line layout with rich information and custom color palette.
 
+![CI](https://github.com/brei0x/starship/actions/workflows/ci.yml/badge.svg)
+
+**Stack**: [Starship](https://starship.rs/) config (`starship.toml`) · Nerd Font glyphs · taplo, Starship and lychee checks in GitHub Actions
+
 ## Preview
 
 ![Preview](screenshots/starship-theme-brei0x-preview.png)
@@ -46,14 +50,6 @@ Regenerate these images with `sh scripts/screenshots.sh`, see the [Development](
 - **Smart path truncation** with folder icon substitutions
 - **Custom color palette** with professional, muted tones
 
-## Installation
-
-**Requirements**: [Starship](https://starship.rs/) and a [Nerd Font](https://www.nerdfonts.com/) (recommended: FiraCode Nerd Font or JetBrainsMono Nerd Font). See the [Installation wiki page](../../wiki/Installation) for full setup instructions.
-
-```bash
-curl -o ~/.config/starship.toml https://raw.githubusercontent.com/brei0x/starship/main/starship.toml
-```
-
 ## Documentation
 
 Full documentation is available in the [wiki](../../wiki):
@@ -65,6 +61,25 @@ Full documentation is available in the [wiki](../../wiki):
 | [Color Palette](../../wiki/Color-Palette) | Theme colors and hex values |
 | [Customization](../../wiki/Customization) | How to personalize the theme |
 | [Development](../../wiki/Development) | Local checks, screenshots, releases and contribution guide |
+| [Security policy](https://github.com/brei0x/starship/security/policy) | How to report a vulnerability; served by `brei0x/.github` |
+
+## Quick start
+
+**Requirements**: [Starship](https://starship.rs/) and a [Nerd Font](https://www.nerdfonts.com/) (recommended: FiraCode Nerd Font or JetBrainsMono Nerd Font). See the [Installation wiki page](../../wiki/Installation) for full setup instructions.
+
+```bash
+curl -o ~/.config/starship.toml https://raw.githubusercontent.com/brei0x/starship/main/starship.toml
+```
+
+## Workflow
+
+One branch per task (`feat/…`, `fix/…`, `chore/…`), Conventional Commits, PRs target `main` and are squash-merged, so the PR title decides the next version. Before pushing:
+
+```bash
+taplo check starship.toml && taplo fmt --check starship.toml \
+  && STARSHIP_CONFIG=./starship.toml starship print-config --default false >/dev/null \
+  && lychee '**/*.md'
+```
 
 ## License
 
