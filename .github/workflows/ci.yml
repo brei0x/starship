@@ -103,18 +103,20 @@ jobs:
 
   automerge:
     needs: [validate-toml, validate-starship, check-links, workflows]
-    if: github.event_name == 'pull_request' && github.event.pull_request.user.login == 'dependabot[bot]'
-    uses: tekalib/.workflows/.github/workflows/dependabot-automerge.yml@1494e487e05e771c4103be2ba30ce1716dde519c # v1.1.0
+    if: ${{ !cancelled() && github.event_name == 'pull_request' && github.event.pull_request.user.login == 'dependabot[bot]' }}
+    uses: tekalib/.workflows/.github/workflows/dependabot-automerge.yml@79652356f97a6498d41d9453be523099e53a7b93 # v1.2.0
     permissions:
       contents: read
       pull-requests: read
+    with:
+      ci-passed: ${{ !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled') }}
     secrets:
       app-key: ${{ secrets.AUTOMATION_APP_KEY }}
 
   release:
     needs: [validate-toml, validate-starship, check-links, workflows]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    uses: tekalib/.workflows/.github/workflows/release.yml@1494e487e05e771c4103be2ba30ce1716dde519c # v1.1.0
+    uses: tekalib/.workflows/.github/workflows/release.yml@79652356f97a6498d41d9453be523099e53a7b93 # v1.2.0
     permissions:
       contents: write
     with:
