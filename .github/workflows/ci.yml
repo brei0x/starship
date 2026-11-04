@@ -18,11 +18,9 @@ env:
   ZIZMOR: zizmor==1.31.1
 
 jobs:
-  validate-toml:
-    name: Validate TOML Syntax
+  checks:
+    name: Checks (TOML syntax · format · Starship config · links · workflow audit)
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -43,16 +41,6 @@ jobs:
       - name: Format check
         run: taplo fmt --check starship.toml
 
-  validate-starship:
-    name: Validate Starship Config
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-
       - name: Install Starship
         run: |
           curl -fsSL -o "$RUNNER_TEMP/starship.tar.gz" \
@@ -72,49 +60,41 @@ jobs:
           fi
           echo "Config is valid"
 
-  check-links:
-    name: Check Links
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-
       - name: Check links in Markdown
         uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
         with:
           args: --verbose --no-progress --exclude 'file://.*wiki' '**/*.md'
           fail: true
 
-  workflows:
-    name: Workflow audit
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
       - run: pipx run "$ZIZMOR" --format github .github
         env:
           GH_TOKEN: ${{ github.token }} # online audits: impostor commits, SHA and tag mismatches
 
+  # The one check Trunk Merge Flow requires, same name everywhere. always(): a job skipped after a
+  # failed need reports success. Pull requests only: no ruleset reads it on a push.
+  ci-passed:
+    name: CI passed
+    needs: [checks]
+    if: ${{ always() && github.event_name == 'pull_request' }}
+    runs-on: ubuntu-slim
+    steps:
+      - if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
+        run: exit 1
+
   automerge:
-    needs: [validate-toml, validate-starship, check-links, workflows]
+    needs: [ci-passed]
     if: ${{ !cancelled() && github.event_name == 'pull_request' && github.event.pull_request.user.login == 'dependabot[bot]' }}
     uses: tekalib/.workflows/.github/workflows/dependabot-automerge.yml@79652356f97a6498d41d9453be523099e53a7b93 # v1.2.0
     permissions:
       contents: read
       pull-requests: read
     with:
-      ci-passed: ${{ !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled') }}
+      ci-passed: ${{ needs.ci-passed.result == 'success' }}
     secrets:
       app-key: ${{ secrets.AUTOMATION_APP_KEY }}
 
   release:
-    needs: [validate-toml, validate-starship, check-links, workflows]
+    needs: [checks]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     uses: tekalib/.workflows/.github/workflows/release.yml@79652356f97a6498d41d9453be523099e53a7b93 # v1.2.0
     permissions:
