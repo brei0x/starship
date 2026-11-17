@@ -68,7 +68,7 @@ Full documentation is available in the [wiki](../../wiki):
 **Requirements**: [Starship](https://starship.rs/) and a [Nerd Font](https://www.nerdfonts.com/) (recommended: FiraCode Nerd Font or JetBrainsMono Nerd Font). See the [Installation wiki page](../../wiki/Installation) for full setup instructions.
 
 ```bash
-curl -o ~/.config/starship.toml https://raw.githubusercontent.com/brei0x/starship/main/starship.toml
+curl -fsSL --create-dirs -o ~/.config/starship.toml https://raw.githubusercontent.com/brei0x/starship/main/starship.toml
 ```
 
 ## Workflow
@@ -77,7 +77,7 @@ One branch per task (`feat/…`, `fix/…`, `chore/…`), Conventional Commits, 
 
 ```bash
 taplo check starship.toml && taplo fmt --check starship.toml \
-  && STARSHIP_CONFIG=./starship.toml starship print-config --default false >/dev/null \
+  && STARSHIP_CONFIG=./starship.toml starship print-config >/dev/null \
   && lychee '**/*.md'
 ```
 
