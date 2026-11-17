@@ -53,8 +53,10 @@ jobs:
       - name: Validate config
         run: |
           export STARSHIP_CONFIG="$GITHUB_WORKSPACE/starship.toml"
-          starship print-config --default false 2>&1 | tee "$RUNNER_TEMP/output.txt"
-          if grep -qi "error\|invalid\|unknown" "$RUNNER_TEMP/output.txt"; then
+          # Starship exits 0 on a rejected key or value: it only reports it on stderr.
+          starship print-config 2> "$RUNNER_TEMP/warnings.txt" > /dev/null
+          if [ -s "$RUNNER_TEMP/warnings.txt" ]; then
+            cat "$RUNNER_TEMP/warnings.txt"
             echo "Starship config validation failed"
             exit 1
           fi

@@ -77,7 +77,7 @@ One branch per task (`feat/…`, `fix/…`, `chore/…`), Conventional Commits, 
 
 ```bash
 taplo check starship.toml && taplo fmt --check starship.toml \
-  && STARSHIP_CONFIG=./starship.toml starship print-config --default false >/dev/null \
+  && STARSHIP_CONFIG=./starship.toml starship print-config >/dev/null \
   && lychee '**/*.md'
 ```
 
