@@ -1,0 +1,6 @@
+# Copy of brei0x/.github's: this repository's own ISSUE_TEMPLATE folder replaces the account's.
+blank_issues_enabled: false
+contact_links:
+  - name: Bug in the Starship engine
+    url: https://github.com/starship/starship/issues
+    about: A problem with Starship itself rather than with this theme belongs upstream.
