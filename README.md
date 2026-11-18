@@ -82,10 +82,6 @@ taplo check starship.toml && taplo fmt --check starship.toml \
   && lychee '**/*.md'
 ```
 
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
 ## Acknowledgments
 
 Inspired by [Powerlevel10k](https://github.com/romkatv/powerlevel10k).
