@@ -2,13 +2,14 @@
 
 A clean and professional Starship prompt theme inspired by Powerlevel10k, featuring a two-line layout with rich information and custom color palette.
 
-![CI](https://github.com/brei0x/starship/actions/workflows/ci.yml/badge.svg)
+<p align="center">
+  <a href="https://github.com/brei0x/starship/actions/workflows/ci.yml"><img src="https://github.com/brei0x/starship/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI"></a>
+  <a href="https://github.com/brei0x/starship/releases/latest"><img src="https://img.shields.io/github/v/release/brei0x/starship?sort=semver" alt="Latest release"></a>
+</p>
 
 **Stack**: [Starship](https://starship.rs/) config (`starship.toml`) · Nerd Font glyphs · taplo, Starship and lychee checks in GitHub Actions
 
 ## Preview
-
-![Preview](screenshots/starship-theme-brei0x-preview.png)
 
 ### Git repository
 ![Git](screenshots/starship-theme-brei0x-git.png)
