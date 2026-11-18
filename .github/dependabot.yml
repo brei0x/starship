@@ -1,5 +1,5 @@
 # Dependabot updates. Security PRs ignore this schedule, the PR limit and the cooldown.
-# Auto-merge policy: the `automerge` job of .github/workflows/ci.yml.
+# Auto-merge policy: .github/workflows/automerge.yml.
 version: 2
 updates:
   - package-ecosystem: github-actions

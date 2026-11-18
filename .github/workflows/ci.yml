@@ -83,22 +83,10 @@ jobs:
       - if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
         run: exit 1
 
-  automerge:
-    needs: [ci-passed]
-    if: ${{ !cancelled() && github.event_name == 'pull_request' && github.event.pull_request.user.login == 'dependabot[bot]' }}
-    uses: tekalib/.workflows/.github/workflows/dependabot-automerge.yml@79652356f97a6498d41d9453be523099e53a7b93 # v1.2.0
-    permissions:
-      contents: read
-      pull-requests: read
-    with:
-      ci-passed: ${{ needs.ci-passed.result == 'success' }}
-    secrets:
-      app-key: ${{ secrets.AUTOMATION_APP_KEY }}
-
   release:
     needs: [checks]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    uses: tekalib/.workflows/.github/workflows/release.yml@79652356f97a6498d41d9453be523099e53a7b93 # v1.2.0
+    uses: tekalib/.workflows/.github/workflows/release.yml@2117de4719b2b334393f9df344fd4e85d9651017 # v2.0.0
     permissions:
       contents: write
     with:
