@@ -1,0 +1,61 @@
+# Based on brei0x/.github's feature form, plus what a theme idea needs: keep the shared fields in step.
+name: Feature idea
+description: Suggest a new module, glyph or behavior for the theme
+title: '[Feature]: '
+labels: [enhancement]
+assignees: [brei0x]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for sharing your idea: the details below make it easy to pick up later.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What is the idea? What problem does it solve, or what does it add?
+      placeholder: E.g. show the active Kubernetes context next to the directory.
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: How you picture it, if you already have a lead (optional).
+    validations:
+      required: false
+
+  - type: textarea
+    id: preview
+    attributes:
+      label: Preview
+      description: A mockup or an example of the prompt you have in mind (optional).
+    validations:
+      required: false
+
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Shell, terminal and font where you would use it (optional).
+      placeholder: E.g. zsh, WezTerm, JetBrainsMono Nerd Font
+    validations:
+      required: false
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Other ways to meet the same need, if you thought of any (optional).
+    validations:
+      required: false
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Links, screenshots, related discussions (optional).
+    validations:
+      required: false

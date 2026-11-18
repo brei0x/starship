@@ -1,0 +1,147 @@
+# Based on brei0x/.github's bug form, plus what a theme bug needs: keep the shared fields in step.
+name: Bug report
+description: Report a rendering or behavior problem in the theme
+title: '[Bug]: '
+labels: [bug]
+assignees: [brei0x]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug: the details below make it quick to reproduce and fix.
+
+        A bug in the Starship engine itself belongs to [starship/starship](https://github.com/starship/starship/issues).
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What does not work?
+      placeholder: E.g. the Git segment shows a square glyph in iTerm2.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: The exact steps that trigger the bug.
+      placeholder: |
+        1. cd into ...
+        2. Run ...
+        3. See ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What should happen instead?
+    validations:
+      required: true
+
+  - type: input
+    id: starship-version
+    attributes:
+      label: Starship version
+      description: Output of `starship --version`.
+      placeholder: starship 1.27.0
+    validations:
+      required: true
+
+  - type: input
+    id: theme-version
+    attributes:
+      label: Theme version
+      description: The release tag you installed, or `main`.
+      placeholder: v1.1.2
+    validations:
+      required: true
+
+  - type: dropdown
+    id: shell
+    attributes:
+      label: Shell
+      options:
+        - zsh
+        - bash
+        - fish
+        - PowerShell
+        - Nushell
+        - Other (name it under Additional context)
+    validations:
+      required: true
+
+  - type: input
+    id: terminal
+    attributes:
+      label: Terminal
+      placeholder: E.g. iTerm2 3.5, WezTerm, Windows Terminal
+    validations:
+      required: true
+
+  - type: input
+    id: font
+    attributes:
+      label: Font
+      description: The theme's glyphs need a Nerd Font.
+      placeholder: E.g. JetBrainsMono Nerd Font 3.4
+    validations:
+      required: true
+
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: E.g. macOS 26.2, Ubuntu 24.04, Windows 11
+    validations:
+      required: true
+
+  - type: textarea
+    id: config
+    attributes:
+      label: Configuration excerpt
+      description: The smallest part of your `starship.toml` that still reproduces the bug, if you changed the theme (optional).
+      render: toml
+    validations:
+      required: false
+
+  - type: textarea
+    id: output
+    attributes:
+      label: Relevant output
+      description: For example `starship explain`, run in the directory where the bug shows (optional).
+      render: shell
+    validations:
+      required: false
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - Critical (blocking, the prompt or the shell is unusable)
+        - High (a major part of the prompt is broken)
+        - Medium (annoying, with a workaround)
+        - Low (cosmetic)
+    validations:
+      required: false
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Screenshots, the state of the Git repository, the module involved (optional).
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I searched the existing issues for this bug.
+          required: true
+        - label: I removed anything sensitive from the excerpts above.
+          required: true
