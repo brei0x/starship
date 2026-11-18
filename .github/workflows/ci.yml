@@ -16,10 +16,11 @@ env:
   STARSHIP_VERSION: v1.27.0
   STARSHIP_SHA256: 10c8eb4cb3b761d9bf59ea828444c2dab36c900b7d69a69e08814b286969df89 # x86_64-unknown-linux-musl
   ZIZMOR: zizmor==1.31.1
+  CHECK_JSONSCHEMA: check-jsonschema==0.38.2
 
 jobs:
   checks:
-    name: Checks (TOML syntax · format · Starship config · links · workflow audit)
+    name: Checks (TOML syntax · format · Starship config · issue forms · links · workflow audit)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -61,6 +62,16 @@ jobs:
             exit 1
           fi
           echo "Config is valid"
+
+      # This repository's forms replace the account's, so a broken one would silently fall back to
+      # GitHub's blank issue here.
+      - name: Validate issue forms
+        run: >-
+          find .github/ISSUE_TEMPLATE -name '*.yml' ! -name config.yml
+          -exec pipx run "$CHECK_JSONSCHEMA" --builtin-schema vendor.github-issue-forms {} +
+
+      - name: Validate issue config
+        run: pipx run "$CHECK_JSONSCHEMA" --builtin-schema vendor.github-issue-config .github/ISSUE_TEMPLATE/config.yml
 
       - name: Check links in Markdown
         uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
