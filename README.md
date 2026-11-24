@@ -10,7 +10,7 @@ A clean and professional Starship prompt theme inspired by Powerlevel10k, featur
 
 ---
 
-**Stack**: [Starship](https://starship.rs/) config (`starship.toml`) · Nerd Font glyphs · taplo, Starship and lychee checks in GitHub Actions
+**Stack**: [Starship](https://starship.rs/) config (`starship.toml`) · Nerd Font glyphs · taplo, Starship and lychee checks, and prompt tests on macOS, Linux and Windows, in GitHub Actions
 
 ## Preview
 
@@ -24,7 +24,11 @@ A clean and professional Starship prompt theme inspired by Powerlevel10k, featur
 
 ### SSH session
 ![SSH](screenshots/starship-theme-brei0x-ssh.png)
-*The username (also shown for root) and the hostname only appear over SSH.*
+*Over SSH the username and the hostname appear (here a real session to an Ubuntu server).*
+
+### Root
+![Root](screenshots/starship-theme-brei0x-root.png)
+*Root turns the username red, even without SSH. An elevated Windows shell shows `Administrator` the same way.*
 
 ### Read-only directory
 ![Read-only](screenshots/starship-theme-brei0x-read-only.png)

@@ -15,6 +15,8 @@ env:
   TAPLO_SHA256: 8fe196b894ccf9072f98d4e1013a180306e17d244830b03986ee5e8eabeb6156 # taplo-linux-x86_64.gz
   STARSHIP_VERSION: v1.27.0
   STARSHIP_SHA256: 10c8eb4cb3b761d9bf59ea828444c2dab36c900b7d69a69e08814b286969df89 # x86_64-unknown-linux-musl
+  STARSHIP_SHA256_MACOS: 5362da8cb2928f98f3ce0ffda697cf0f8de70081db000dae316d6d3a404f6cf0 # aarch64-apple-darwin
+  STARSHIP_SHA256_WINDOWS: 7764f861805376af2812dd78c84fadc16b714cf3f346baed9b597bfda8484403 # x86_64-pc-windows-msvc
   ZIZMOR: zizmor==1.31.1
   CHECK_JSONSCHEMA: check-jsonschema==0.38.2
 
@@ -83,11 +85,67 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }} # online audits: impostor commits, SHA and tag mismatches
 
+  prompt:
+    name: Prompt (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            asset: starship-x86_64-unknown-linux-musl.tar.gz
+            sha: STARSHIP_SHA256
+          - os: macos-latest
+            asset: starship-aarch64-apple-darwin.tar.gz
+            sha: STARSHIP_SHA256_MACOS
+          - os: windows-latest
+            asset: starship-x86_64-pc-windows-msvc.zip
+            sha: STARSHIP_SHA256_WINDOWS
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install Starship and the shells
+        env:
+          ASSET: ${{ matrix.asset }}
+          SHA: ${{ env[matrix.sha] }}
+        run: |
+          curl -fsSL -o "$RUNNER_TEMP/$ASSET" "https://github.com/starship/starship/releases/download/$STARSHIP_VERSION/$ASSET"
+          sum=sha256sum; command -v sha256sum > /dev/null || sum="shasum -a 256" # macOS has only shasum, Git Bash only sha256sum
+          echo "$SHA  $RUNNER_TEMP/$ASSET" | $sum -c -
+          mkdir -p "$RUNNER_TEMP/bin"
+          case $ASSET in
+            *.zip) unzip -q -o "$RUNNER_TEMP/$ASSET" starship.exe -d "$RUNNER_TEMP/bin" ;;
+            *) tar -xzf "$RUNNER_TEMP/$ASSET" -C "$RUNNER_TEMP/bin" starship ;;
+          esac
+          echo "$RUNNER_TEMP/bin" >> "$GITHUB_PATH"
+          case $RUNNER_OS in
+            Linux) sudo apt-get update -qq && sudo apt-get install -qq -y zsh fish > /dev/null ;;
+            macOS) brew install --quiet fish ;;
+          esac
+
+      - name: Test the prompt
+        run: sh scripts/test-prompt.sh "$RUNNER_TEMP/captures"
+
+      # sudo keeps the user's SSH-free environment; Windows runners are elevated already.
+      - name: Test the prompt as root
+        if: runner.os != 'Windows'
+        run: sudo -E env "PATH=$PATH" sh scripts/test-prompt.sh
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: prompt-${{ runner.os }}
+          path: ${{ runner.temp }}/captures
+
   # The one check Trunk Merge Flow requires, same name everywhere. always(): a job skipped after a
   # failed need reports success. Pull requests only: no ruleset reads it on a push.
   ci-passed:
     name: CI passed
-    needs: [checks]
+    needs: [checks, prompt]
     if: ${{ always() && github.event_name == 'pull_request' }}
     runs-on: ubuntu-slim
     steps:
