@@ -24,7 +24,7 @@ A clean and professional Starship prompt theme inspired by Powerlevel10k, featur
 
 ### SSH session
 ![SSH](screenshots/starship-theme-brei0x-ssh.png)
-*The username appears over SSH (and for root), the hostname is always shown.*
+*The username (also shown for root) and the hostname only appear over SSH.*
 
 ### Read-only directory
 ![Read-only](screenshots/starship-theme-brei0x-read-only.png)
