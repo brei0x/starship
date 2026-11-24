@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="screenshots/starship-theme-brei0x-social-preview.png" alt="Brei0x Starship Theme prompt in zsh and PowerShell">
+</p>
+
 # Brei0x Starship Theme
 
 A clean and professional Starship prompt theme inspired by Powerlevel10k, featuring a two-line layout with rich information and custom color palette.
