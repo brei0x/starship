@@ -60,19 +60,21 @@ start_server() {
     --build-arg SHA256_AMD64="$STARSHIP_SHA256_AMD64" --build-arg SHA256_ARM64="$STARSHIP_SHA256_ARM64" - > /dev/null << 'EOF'
 FROM ubuntu:24.04
 ARG VERSION SHA256_AMD64 SHA256_ARM64
-RUN apt-get update -qq && apt-get install -qq -y --no-install-recommends openssh-server curl ca-certificates > /dev/null \
+RUN apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -qq -y --no-install-recommends openssh-server curl ca-certificates tzdata > /dev/null \
  && arch=$(dpkg --print-architecture) \
  && case "$arch" in amd64) triple=x86_64; sum=$SHA256_AMD64 ;; arm64) triple=aarch64; sum=$SHA256_ARM64 ;; *) exit 1 ;; esac \
  && curl -fsSL -o /tmp/starship.tar.gz "https://github.com/starship/starship/releases/download/$VERSION/starship-$triple-unknown-linux-musl.tar.gz" \
  && echo "$sum  /tmp/starship.tar.gz" | sha256sum -c - \
  && tar -xzf /tmp/starship.tar.gz -C /usr/local/bin starship && rm /tmp/starship.tar.gz \
- && useradd -m -s /bin/bash deploy && mkdir -p /run/sshd \
+ && useradd -m -s /bin/bash deploy && useradd -m -s /bin/bash brei0x && mkdir -p /run/sshd \
  && rm -rf /var/lib/apt/lists/*
 EOF
   ssh-keygen -q -t ed25519 -N '' -f "$WORK/id_ed25519"
   SERVER=$(docker run -d --hostname "$SERVER_NAME" -p 127.0.0.1::22 \
-    -e PUBKEY="$(cat "$WORK/id_ed25519.pub")" -v "$ROOT/starship.toml:/etc/starship.toml:ro" "$SERVER_IMAGE" \
-    sh -c 'for home in /root /home/deploy; do
+    -e PUBKEY="$(cat "$WORK/id_ed25519.pub")" -e ZONE="$(readlink /etc/localtime | sed 's#.*/zoneinfo/##')" \
+    -v "$ROOT/starship.toml:/etc/starship.toml:ro" "$SERVER_IMAGE" \
+    sh -c 'ln -sf "/usr/share/zoneinfo/$ZONE" /etc/localtime # same clock as the local prompts
+           for home in /root /home/deploy /home/brei0x; do
              mkdir -p $home/.ssh && echo "$PUBKEY" > $home/.ssh/authorized_keys
              chown -R "$(stat -c %u:%g $home)" $home/.ssh && chmod 700 $home/.ssh
            done
@@ -119,3 +121,19 @@ server_prompt root /var/log | render root
 prompt "$WORK/locked" "/etc" | render read-only
 prompt "$WORK/home" "~" -d 65000 -s 1 | render duration-error
 VI_SHELL=fish prompt "$WORK/home" "~" -k default | render vim # keymaps need a vi-capable shell; fish adds no wrappers
+
+# Social preview: a macOS session hopping to the Linux server, and the same repository on Windows.
+COLUMNS=92
+typed() { sed "\$s|\$|$1|"; } # the command typed after the prompt character
+{
+  prompt "$WORK/home" "~" | typed "cd Developer/starship"
+  prompt "$WORK/starship" "~/Developer/starship" | typed "ssh brei0x@$SERVER_NAME"
+  server_prompt brei0x '~'
+} | python3 "$ROOT/scripts/prompt-svg.py" --font "$FAMILY" --title zsh > "$WORK/social-macos.svg"
+# shortcut: drawn on macOS with the Windows icon and separators; the Prompt CI job checks the real Windows render.
+prompt "$WORK/starship" "~/Developer/starship" \
+  | sed "s#/#\\\\#g; s/$(printf '\357\214\202')/$(printf '\363\260\215\262')/" | typed "git push" \
+  | python3 "$ROOT/scripts/prompt-svg.py" --font "$FAMILY" --chrome windows --title PowerShell > "$WORK/social-windows.svg"
+python3 "$ROOT/scripts/social-preview.py" --font "$FAMILY" "$WORK/social-macos.svg" "$WORK/social-windows.svg" > "$WORK/social.svg"
+resvg "$WORK/social.svg" "$OUT/${PREFIX}social-preview.png"
+echo "$OUT/${PREFIX}social-preview.png"

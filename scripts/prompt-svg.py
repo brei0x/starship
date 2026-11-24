@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Renders ANSI truecolor text from stdin as an SVG terminal window on stdout, one cell per code point.
 
-Usage: prompt-svg.py --font "JetBrainsMono Nerd Font" > out.svg
+Usage: prompt-svg.py --font "JetBrainsMono Nerd Font" [--chrome windows] [--title zsh] > out.svg
 """
 import argparse
 import re
@@ -52,10 +52,24 @@ def parse(text):
             yield row, col, chunk, fg, bg, bold
 
 
+def window_controls(right, middle):
+    """Minimize, maximize and close glyphs drawn at the right end of a Windows title bar."""
+    stroke = 'stroke="%s" stroke-width="1.2" fill="none"' % FOREGROUND
+    x = right - 26  # center of the close button, then 46 px per button leftward
+    return "".join((
+        '<path d="M%.1f %.1f l10 10 M%.1f %.1f l-10 10" %s/>' % (x - 5, middle - 5, x + 5, middle - 5, stroke),
+        '<rect x="%.1f" y="%.1f" width="10" height="10" %s/>' % (x - 46 - 5, middle - 5, stroke),
+        '<path d="M%.1f %.1f h10" %s/>' % (x - 92 - 5, middle, stroke),
+    ))
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--font", required=True)
-    font = parser.parse_args().font
+    parser.add_argument("--chrome", choices=("macos", "windows"), default="macos")
+    parser.add_argument("--title", default="")
+    args = parser.parse_args()
+    font = args.font
     text = sys.stdin.read().rstrip("\n")
     rows = text.count("\n") + 1
     x0 = MARGIN + PADDING
@@ -73,8 +87,11 @@ def main():
                          % (x, baseline - GLYPH_ABOVE, len(chunk) * CELL_WIDTH, GLYPH_ABOVE + GLYPH_BELOW, bg))
         weight = ' font-weight="700"' if bold else ""
         texts.append('<text x="%.2f" y="%.2f" fill="%s"%s>%s</text>' % (x, baseline, fg or FOREGROUND, weight, escape(chunk)))
-    lights = "".join('<circle cx="%d" cy="%d" r="6" fill="%s"/>' % (MARGIN + 20 + i * 20, MARGIN + 20, c)
-                     for i, c in enumerate(TRAFFIC_LIGHTS))
+    if args.chrome == "windows":
+        lights = window_controls(MARGIN + window_width, MARGIN + 20)
+    else:
+        lights = "".join('<circle cx="%d" cy="%d" r="6" fill="%s"/>' % (MARGIN + 20 + i * 20, MARGIN + 20, c)
+                         for i, c in enumerate(TRAFFIC_LIGHTS))
     print('<svg xmlns="http://www.w3.org/2000/svg" width="%d" height="%.0f" viewBox="0 0 %d %.0f">'
           % (window_width + 2 * MARGIN, height, window_width + 2 * MARGIN, height))
     print('<defs><filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">'
@@ -82,6 +99,9 @@ def main():
     print('<rect x="%d" y="%d" width="%d" height="%.0f" rx="10" fill="%s" filter="url(#shadow)"/>'
           % (MARGIN, MARGIN, window_width, height - 2 * MARGIN, BACKGROUND))
     print(lights)
+    if args.title:
+        print('<text x="%.1f" y="%d" text-anchor="middle" font-family="%s" font-size="13" fill="%s">%s</text>'
+              % (MARGIN + window_width / 2, MARGIN + 24, escape(font), FOREGROUND, escape(args.title)))
     print("\n".join(rects))
     print('<g font-family="%s" font-size="%d" xml:space="preserve">' % (escape(font), FONT_SIZE))
     print("\n".join(texts))
