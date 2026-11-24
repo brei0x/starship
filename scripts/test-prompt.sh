@@ -34,16 +34,17 @@ warnings=$(starship print-config 2>&1 > /dev/null)
 
 host=$(hostname)
 user=${USER:-${USERNAME:-$(id -un)}}
+case $(uname -s) in MINGW* | MSYS* | CYGWIN*) is_admin && user=Administrator ;; esac # starship's name for an elevated token
 local_prompt=$(prompt)
 ssh_prompt=$(prompt SSH_CONNECTION="$SSH_FAKE")
 
-contains "$local_prompt" "$host" && fail "hostname shown locally" || pass "hostname hidden locally"
-contains "$ssh_prompt" "$host" && pass "hostname shown over SSH" || fail "hostname missing over SSH"
-contains "$ssh_prompt" " $user " && pass "username shown over SSH" || fail "username missing over SSH"
+contains "$local_prompt" "$host" && fail "hostname shown locally: $local_prompt" || pass "hostname hidden locally"
+contains "$ssh_prompt" "$host" && pass "hostname shown over SSH" || fail "hostname missing over SSH: $ssh_prompt"
+contains "$ssh_prompt" " $user " && pass "username shown over SSH" || fail "username missing over SSH: $ssh_prompt"
 if is_admin; then
-  contains "$local_prompt" " $user " && pass "username shown locally as root/admin" || fail "username missing as root/admin"
+  contains "$local_prompt" " $user " && pass "username shown locally as root/admin" || fail "username missing as root/admin: $local_prompt"
 else
-  contains "$local_prompt" " $user " && fail "username shown locally" || pass "username hidden locally"
+  contains "$local_prompt" " $user " && fail "username shown locally: $local_prompt" || pass "username hidden locally"
 fi
 [ -n "$(starship module os | plain | tr -d ' ')" ] && pass "OS symbol rendered" || fail "no OS symbol"
 

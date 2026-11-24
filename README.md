@@ -28,7 +28,7 @@ A clean and professional Starship prompt theme inspired by Powerlevel10k, featur
 
 ### Root
 ![Root](screenshots/starship-theme-brei0x-root.png)
-*Root, or an elevated Windows shell, turns the username red, even without SSH.*
+*Root turns the username red, even without SSH. An elevated Windows shell shows `Administrator` the same way.*
 
 ### Read-only directory
 ![Read-only](screenshots/starship-theme-brei0x-read-only.png)
