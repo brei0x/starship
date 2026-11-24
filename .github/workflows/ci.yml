@@ -115,7 +115,8 @@ jobs:
           SHA: ${{ env[matrix.sha] }}
         run: |
           curl -fsSL -o "$RUNNER_TEMP/$ASSET" "https://github.com/starship/starship/releases/download/$STARSHIP_VERSION/$ASSET"
-          echo "$SHA  $RUNNER_TEMP/$ASSET" | shasum -a 256 -c -
+          sum=sha256sum; command -v sha256sum > /dev/null || sum="shasum -a 256" # macOS has only shasum, Git Bash only sha256sum
+          echo "$SHA  $RUNNER_TEMP/$ASSET" | $sum -c -
           mkdir -p "$RUNNER_TEMP/bin"
           case $ASSET in
             *.zip) unzip -q -o "$RUNNER_TEMP/$ASSET" starship.exe -d "$RUNNER_TEMP/bin" ;;
