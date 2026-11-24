@@ -242,7 +242,7 @@ style = 'fg:black bg:yellow'
 [hostname]
 format = '[  $hostname]($style)'
 ssh_only = true
-trim_at = ''
+trim_at = '.'
 style = 'fg:white bg:gray'
 
 [cmd_duration]

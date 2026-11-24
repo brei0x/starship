@@ -32,7 +32,7 @@ echo "starship $(starship --version | sed -n '1s/starship //p') on $(uname -s) $
 warnings=$(starship print-config 2>&1 > /dev/null)
 [ -z "$warnings" ] && pass "config has no warnings" || fail "config warnings: $warnings"
 
-host=$(hostname)
+host=$(hostname | cut -d. -f1) # trim_at = '.' keeps the first label
 user=${USER:-${USERNAME:-$(id -un)}}
 case $(uname -s) in MINGW* | MSYS* | CYGWIN*) is_admin && user=Administrator ;; esac # starship's name for an elevated token
 local_prompt=$(prompt)
