@@ -1,12 +1,12 @@
 #!/bin/sh
-# Renders the README screenshots from starship.toml into screenshots/.
+# Renders the README screenshots from starship.toml into docs/assets/.
 # Runbook: https://github.com/brei0x/starship/wiki/Development#screenshots
 # The displayed path is a label starship renders as is, substituting its leading ~ itself.
 # shellcheck disable=SC2088
 set -eu
 
 ROOT=$(cd "$(dirname "$0")/.." && pwd)
-OUT=$ROOT/screenshots
+OUT=$ROOT/docs/assets
 PREFIX=starship-theme-brei0x-
 FAMILY="JetBrainsMono Nerd Font" # not the Mono variant: its icons are shrunk to one cell
 COLUMNS=117 # the SVG window is sized from it
@@ -98,7 +98,7 @@ server_prompt() {
   remote "$1" "cd $2 && STARSHIP_CONFIG=/etc/starship.toml starship prompt -w $COLUMNS" | sed '/^[[:space:]]*$/d'
 }
 
-# render <name>: ANSI on stdin -> screenshots/<prefix><name>.png
+# render <name>: ANSI on stdin -> docs/assets/<prefix><name>.png
 render() {
   python3 "$ROOT/scripts/prompt-svg.py" --font "$FAMILY" > "$WORK/$1.svg"
   resvg --zoom 2 "$WORK/$1.svg" "$OUT/$PREFIX$1.png"
@@ -106,13 +106,6 @@ render() {
 }
 
 mkdir -p "$OUT"
-{
-  prompt "$WORK/home" "~"; echo "cd Developer/starship"
-  prompt "$WORK/starship" "~/Developer/starship"; echo "terraform plan"
-  prompt "$WORK/starship" "~/Developer/starship" -d 65000; echo "false"
-  prompt "$WORK/starship" "~/Developer/starship" -s 1; echo
-} | render preview
-prompt "$WORK/home" "~" | render home
 prompt "$WORK/starship" "~/Developer/starship" | render git
 prompt "$WORK/api" "~/Developer/api" | render languages
 start_server
@@ -124,16 +117,17 @@ VI_SHELL=fish prompt "$WORK/home" "~" -k default | render vim # keymaps need a v
 
 # Social preview: a macOS session hopping to the Linux server, and the same repository on Windows.
 COLUMNS=92
+BLOCK_GAP=8 # px between prompt blocks, under half a line (18.5 px)
 typed() { sed "\$s|\$|$1|"; } # the command typed after the prompt character
 {
   prompt "$WORK/home" "~" | typed "cd Developer/starship"
   prompt "$WORK/starship" "~/Developer/starship" | typed "ssh brei0x@$SERVER_NAME"
   server_prompt brei0x '~'
-} | python3 "$ROOT/scripts/prompt-svg.py" --font "$FAMILY" --title zsh > "$WORK/social-macos.svg"
+} | python3 "$ROOT/scripts/prompt-svg.py" --font "$FAMILY" --block-gap $BLOCK_GAP --title zsh > "$WORK/social-macos.svg"
 # shortcut: drawn on macOS with the Windows icon and separators; the Prompt CI job checks the real Windows render.
 prompt "$WORK/starship" "~/Developer/starship" \
   | sed "s#/#\\\\#g; s/$(printf '\357\214\202')/$(printf '\363\260\215\262')/" | typed "git push" \
-  | python3 "$ROOT/scripts/prompt-svg.py" --font "$FAMILY" --chrome windows --title PowerShell > "$WORK/social-windows.svg"
+  | python3 "$ROOT/scripts/prompt-svg.py" --font "$FAMILY" --block-gap $BLOCK_GAP --chrome windows --title PowerShell > "$WORK/social-windows.svg"
 python3 "$ROOT/scripts/social-preview.py" --font "$FAMILY" "$WORK/social-macos.svg" "$WORK/social-windows.svg" > "$WORK/social.svg"
 resvg "$WORK/social.svg" "$OUT/${PREFIX}social-preview.png"
 echo "$OUT/${PREFIX}social-preview.png"

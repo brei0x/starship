@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="screenshots/starship-theme-brei0x-social-preview.png" alt="Brei0x Starship Theme prompt in zsh and PowerShell">
+  <img src="docs/assets/starship-theme-brei0x-social-preview.png" alt="Brei0x Starship Theme prompt in zsh and PowerShell">
 </p>
 
 # Brei0x Starship Theme
@@ -19,31 +19,31 @@ A clean and professional Starship prompt theme inspired by Powerlevel10k, featur
 ## Preview
 
 ### Git repository
-![Git](screenshots/starship-theme-brei0x-git.png)
+![Git](docs/assets/starship-theme-brei0x-git.png)
 *Branch, then modified, staged and untracked files, one commit ahead, and the Terraform version.*
 
 ### Languages
-![Languages](screenshots/starship-theme-brei0x-languages.png)
+![Languages](docs/assets/starship-theme-brei0x-languages.png)
 *Node.js and Python detected from the project files.*
 
 ### SSH session
-![SSH](screenshots/starship-theme-brei0x-ssh.png)
+![SSH](docs/assets/starship-theme-brei0x-ssh.png)
 *Over SSH the username and the hostname appear (here a real session to an Ubuntu server).*
 
 ### Root
-![Root](screenshots/starship-theme-brei0x-root.png)
+![Root](docs/assets/starship-theme-brei0x-root.png)
 *Root turns the username red, even without SSH. An elevated Windows shell shows `Administrator` the same way.*
 
 ### Read-only directory
-![Read-only](screenshots/starship-theme-brei0x-read-only.png)
+![Read-only](docs/assets/starship-theme-brei0x-read-only.png)
 *A lock marks a directory you cannot write to.*
 
 ### Command duration
-![Duration](screenshots/starship-theme-brei0x-duration-error.png)
+![Duration](docs/assets/starship-theme-brei0x-duration-error.png)
 *Execution time after a long-running command.*
 
 ### Vim normal mode
-![Vim](screenshots/starship-theme-brei0x-vim.png)
+![Vim](docs/assets/starship-theme-brei0x-vim.png)
 *The prompt character flips when the line editor is in normal mode.*
 
 Regenerate these images with `sh scripts/screenshots.sh`, see the [Development](../../wiki/Development#screenshots) wiki page.
