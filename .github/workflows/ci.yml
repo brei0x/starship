@@ -86,7 +86,7 @@ jobs:
           GH_TOKEN: ${{ github.token }} # online audits: impostor commits, SHA and tag mismatches
 
   prompt:
-    name: Prompt (${{ matrix.os }})
+    name: Tests (prompt · ${{ matrix.os }})
     strategy:
       fail-fast: false
       matrix:
@@ -141,12 +141,12 @@ jobs:
           name: prompt-${{ runner.os }}
           path: ${{ runner.temp }}/captures
 
-  # The one check Trunk Merge Flow requires, same name everywhere. always(): a job skipped after a
-  # failed need reports success. Pull requests only: no ruleset reads it on a push.
+  # The one check the Trunk Merge Flow ruleset requires, same name in every repository: it needs
+  # every other job. always(), because a job skipped after a failed need reports success.
   ci-passed:
     name: CI passed
     needs: [checks, prompt]
-    if: ${{ always() && github.event_name == 'pull_request' }}
+    if: always()
     runs-on: ubuntu-slim
     steps:
       - if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
