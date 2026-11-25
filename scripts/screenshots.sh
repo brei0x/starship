@@ -1,12 +1,12 @@
 #!/bin/sh
-# Renders the README screenshots from starship.toml into screenshots/.
+# Renders the README screenshots from starship.toml into docs/assets/.
 # Runbook: https://github.com/brei0x/starship/wiki/Development#screenshots
 # The displayed path is a label starship renders as is, substituting its leading ~ itself.
 # shellcheck disable=SC2088
 set -eu
 
 ROOT=$(cd "$(dirname "$0")/.." && pwd)
-OUT=$ROOT/screenshots
+OUT=$ROOT/docs/assets
 PREFIX=starship-theme-brei0x-
 FAMILY="JetBrainsMono Nerd Font" # not the Mono variant: its icons are shrunk to one cell
 COLUMNS=117 # the SVG window is sized from it
@@ -98,7 +98,7 @@ server_prompt() {
   remote "$1" "cd $2 && STARSHIP_CONFIG=/etc/starship.toml starship prompt -w $COLUMNS" | sed '/^[[:space:]]*$/d'
 }
 
-# render <name>: ANSI on stdin -> screenshots/<prefix><name>.png
+# render <name>: ANSI on stdin -> docs/assets/<prefix><name>.png
 render() {
   python3 "$ROOT/scripts/prompt-svg.py" --font "$FAMILY" > "$WORK/$1.svg"
   resvg --zoom 2 "$WORK/$1.svg" "$OUT/$PREFIX$1.png"
