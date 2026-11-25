@@ -106,13 +106,6 @@ render() {
 }
 
 mkdir -p "$OUT"
-{
-  prompt "$WORK/home" "~"; echo "cd Developer/starship"
-  prompt "$WORK/starship" "~/Developer/starship"; echo "terraform plan"
-  prompt "$WORK/starship" "~/Developer/starship" -d 65000; echo "false"
-  prompt "$WORK/starship" "~/Developer/starship" -s 1; echo
-} | render preview
-prompt "$WORK/home" "~" | render home
 prompt "$WORK/starship" "~/Developer/starship" | render git
 prompt "$WORK/api" "~/Developer/api" | render languages
 start_server
