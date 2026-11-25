@@ -86,7 +86,7 @@ jobs:
           GH_TOKEN: ${{ github.token }} # online audits: impostor commits, SHA and tag mismatches
 
   prompt:
-    name: Prompt (${{ matrix.os }})
+    name: Tests (prompt · ${{ matrix.os }})
     strategy:
       fail-fast: false
       matrix:
