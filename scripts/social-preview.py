@@ -59,7 +59,7 @@ def main() -> None:
     parser.add_argument("windows")
     args = parser.parse_args()
     font = escape(args.font)
-    mac = nest(*load(args.macos), 6, 150)
+    mac = nest(*load(args.macos), 6, 130)  
     win_svg, win_w, win_h = load(args.windows)
     windows = nest(win_svg, win_w, win_h, WIDTH - win_w * SCALE - 6, HEIGHT - win_h * SCALE + 22)
     print('<svg xmlns="http://www.w3.org/2000/svg" width="%d" height="%d" viewBox="0 0 %d %d">' % (WIDTH, HEIGHT, WIDTH, HEIGHT))

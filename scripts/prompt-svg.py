@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Renders ANSI truecolor text from stdin as an SVG terminal window on stdout, one cell per code point.
 
-Usage: prompt-svg.py --font "JetBrainsMono Nerd Font" [--chrome windows] [--title zsh] > out.svg
+Usage: prompt-svg.py --font "JetBrainsMono Nerd Font" [--chrome windows] [--title zsh] [--block-gap 8] > out.svg
 """
 import argparse
 import re
@@ -17,6 +17,7 @@ MARGIN, PADDING, TITLE_BAR = 30, 28, 40
 BACKGROUND, FOREGROUND = "#282c34", "#abb2bf"
 TRAFFIC_LIGHTS = ("#ff5f57", "#febc2e", "#28c840")
 SGR = re.compile(r"\x1b\[([\d;]*)m")
+PROMPT_CHARACTERS = ("\u276f", "\u276e")  # the character module ends each prompt block, see starship.toml
 
 
 def parse(text):
@@ -52,6 +53,16 @@ def parse(text):
             yield row, col, chunk, fg, bg, bold
 
 
+def block_offsets(text, gap):
+    """Extra y offset of each row: gap once per prompt block that precedes it."""
+    offsets, extra = [], 0.0
+    for line in text.split("\n"):
+        offsets.append(extra)
+        if SGR.sub("", line).lstrip().startswith(PROMPT_CHARACTERS):
+            extra += gap
+    return offsets
+
+
 def window_controls(right, middle):
     """Minimize, maximize and close glyphs drawn at the right end of a Windows title bar."""
     stroke = 'stroke="%s" stroke-width="1.2" fill="none"' % FOREGROUND
@@ -68,20 +79,22 @@ def main():
     parser.add_argument("--font", required=True)
     parser.add_argument("--chrome", choices=("macos", "windows"), default="macos")
     parser.add_argument("--title", default="")
+    parser.add_argument("--block-gap", type=float, default=0, help="px between prompt blocks")
     args = parser.parse_args()
     font = args.font
     text = sys.stdin.read().rstrip("\n")
     rows = text.count("\n") + 1
     x0 = MARGIN + PADDING
     baseline0 = MARGIN + TITLE_BAR + PADDING + GLYPH_ABOVE
-    height = MARGIN + TITLE_BAR + PADDING + rows * LINE_PITCH + PADDING + MARGIN
+    offsets = block_offsets(text, args.block_gap)
+    height = MARGIN + TITLE_BAR + PADDING + rows * LINE_PITCH + offsets[-1] + PADDING + MARGIN
     runs = list(parse(text))
     columns = max(col + len(chunk) for _, col, chunk, *_ in runs)
     window_width = round(2 * PADDING + columns * CELL_WIDTH)  # the window hugs the widest line
     rects, texts = [], []
     for row, col, chunk, fg, bg, bold in runs:
         x = x0 + col * CELL_WIDTH
-        baseline = baseline0 + row * LINE_PITCH
+        baseline = baseline0 + row * LINE_PITCH + offsets[row]
         if bg:
             rects.append('<rect x="%.2f" y="%.2f" width="%.2f" height="%.2f" fill="%s"/>'
                          % (x, baseline - GLYPH_ABOVE, len(chunk) * CELL_WIDTH, GLYPH_ABOVE + GLYPH_BELOW, bg))

@@ -124,16 +124,17 @@ VI_SHELL=fish prompt "$WORK/home" "~" -k default | render vim # keymaps need a v
 
 # Social preview: a macOS session hopping to the Linux server, and the same repository on Windows.
 COLUMNS=92
+BLOCK_GAP=8 # px between prompt blocks, under half a line (18.5 px)
 typed() { sed "\$s|\$|$1|"; } # the command typed after the prompt character
 {
   prompt "$WORK/home" "~" | typed "cd Developer/starship"
   prompt "$WORK/starship" "~/Developer/starship" | typed "ssh brei0x@$SERVER_NAME"
   server_prompt brei0x '~'
-} | python3 "$ROOT/scripts/prompt-svg.py" --font "$FAMILY" --title zsh > "$WORK/social-macos.svg"
+} | python3 "$ROOT/scripts/prompt-svg.py" --font "$FAMILY" --block-gap $BLOCK_GAP --title zsh > "$WORK/social-macos.svg"
 # shortcut: drawn on macOS with the Windows icon and separators; the Prompt CI job checks the real Windows render.
 prompt "$WORK/starship" "~/Developer/starship" \
   | sed "s#/#\\\\#g; s/$(printf '\357\214\202')/$(printf '\363\260\215\262')/" | typed "git push" \
-  | python3 "$ROOT/scripts/prompt-svg.py" --font "$FAMILY" --chrome windows --title PowerShell > "$WORK/social-windows.svg"
+  | python3 "$ROOT/scripts/prompt-svg.py" --font "$FAMILY" --block-gap $BLOCK_GAP --chrome windows --title PowerShell > "$WORK/social-windows.svg"
 python3 "$ROOT/scripts/social-preview.py" --font "$FAMILY" "$WORK/social-macos.svg" "$WORK/social-windows.svg" > "$WORK/social.svg"
 resvg "$WORK/social.svg" "$OUT/${PREFIX}social-preview.png"
 echo "$OUT/${PREFIX}social-preview.png"
