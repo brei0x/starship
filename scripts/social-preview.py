@@ -8,6 +8,9 @@ import re
 from xml.sax.saxutils import escape
 
 WIDTH, HEIGHT = 1280, 640
+RADIUS = WIDTH // 40  # rounded transparent corners, 2.5 % of the width
+TITLE_SIZE = 46
+TITLE_TRACKING = -0.02 * TITLE_SIZE  # display size wants negative tracking
 SCALE = 1.22  # terminal windows, so the prompt stays legible when the card is shown at half size
 GRADIENT = ("#4668a6", "#2a3550")  # palette blue to a darker navy
 TITLE, SUBTITLE = "Brei0x Starship Theme", "A Powerlevel10k-style prompt for every shell"
@@ -61,14 +64,17 @@ def main() -> None:
     windows = nest(win_svg, win_w, win_h, WIDTH - win_w * SCALE - 6, HEIGHT - win_h * SCALE + 22)
     print('<svg xmlns="http://www.w3.org/2000/svg" width="%d" height="%d" viewBox="0 0 %d %d">' % (WIDTH, HEIGHT, WIDTH, HEIGHT))
     print('<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">'
-          '<stop offset="0" stop-color="%s"/><stop offset="1" stop-color="%s"/></linearGradient></defs>' % GRADIENT)
+          '<stop offset="0" stop-color="%s"/><stop offset="1" stop-color="%s"/></linearGradient>' % GRADIENT
+          + '<clipPath id="card"><rect width="%d" height="%d" rx="%d"/></clipPath></defs>' % (WIDTH, HEIGHT, RADIUS))
+    print('<g clip-path="url(#card)">')
     print('<rect width="%d" height="%d" fill="url(#bg)"/>' % (WIDTH, HEIGHT))
-    print('<text x="48" y="84" font-family="%s" font-size="46" font-weight="700" fill="%s">%s</text>' % (font, INK, escape(TITLE)))
+    print('<text x="48" y="84" font-family="%s" font-size="%d" font-weight="700" letter-spacing="%.2f" fill="%s">%s</text>'
+          % (font, TITLE_SIZE, TITLE_TRACKING, INK, escape(TITLE)))
     print('<text x="50" y="124" font-family="%s" font-size="22" fill="%s">%s</text>' % (font, SOFT_INK, escape(SUBTITLE)))
     print(badges(args.font, WIDTH - 48 - sum(badge_width(label) + 12 for _, label in BADGES) + 12, 56))
     print(mac)
     print(windows)
-    print("</svg>")
+    print("</g></svg>")
 
 
 if __name__ == "__main__":
