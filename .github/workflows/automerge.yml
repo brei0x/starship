@@ -10,7 +10,7 @@ permissions:
 jobs:
   automerge:
     if: github.event.pull_request.user.login == 'dependabot[bot]'
-    uses: tekalib/.workflows/.github/workflows/dependabot-automerge.yml@5147e53dc9c5f82906fb81cb21925a0e365df6e6 # v2.2.0
+    uses: tekalib/.workflows/.github/workflows/dependabot-automerge.yml@9cf72126b4feae53c5b30b8a3040014d3de71d5f # v2.2.1
     permissions:
       contents: read
       pull-requests: read
